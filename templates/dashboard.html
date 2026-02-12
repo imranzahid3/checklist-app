@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checklist Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-4">
+
+<h3>Shared Work Checklist</h3>
+<a href="/logout" class="btn btn-danger btn-sm float-end">Logout</a>
+
+<form method="POST" class="mb-3">
+    <input type="text" name="task" class="form-control" placeholder="Enter new work item..." required>
+    <button class="btn btn-success mt-2">Add Task</button>
+</form>
+
+<ul class="list-group">
+    {% for task in tasks %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                {% if task.status == "Done" %}
+                    <strike>{{ task.description }}</strike><br>
+                    <small>Completed by {{ task.completed_by }} at {{ task.completed_at }}</small>
+                {% else %}
+                    {{ task.description }}
+                {% endif %}
+            </div>
+
+            {% if task.status == "Pending" %}
+                <a href="/complete/{{ task.id }}" class="btn btn-sm btn-success">✔</a>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>
