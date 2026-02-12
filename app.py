@@ -82,17 +82,14 @@ def complete(task_id):
 
 # ------------------ INIT ------------------
 
-if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
+with app.app_context():
+    db.create_all()
 
-        # Create default users if not exists
-        if not User.query.filter_by(username="admin").first():
-            admin = User(username="admin", password="admin123")
-            je = User(username="je", password="je123")
-            db.session.add(admin)
-            db.session.add(je)
-            db.session.commit()
+    if not User.query.filter_by(username="admin").first():
+        admin = User(username="admin", password="admin123")
+        je = User(username="je", password="je123")
+        db.session.add(admin)
+        db.session.add(je)
+        db.session.commit()
 
-    app.run()
 
